@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.dbrizov.naughtyattributes": {
-      "version": "file:com.dbrizov.naughtyattributes",
+    "com.cuebitt.naughtyattributes": {
+      "version": "file:com.cuebitt.naughtyattributes",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
