@@ -1,40 +1,63 @@
 # NaughtyAttributes
-[![Unity 2019.4+](https://img.shields.io/badge/unity-2019.4%2B-blue.svg)](https://unity3d.com/get-unity/download)
-[![openupm](https://img.shields.io/npm/v/com.dbrizov.naughtyattributes?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.dbrizov.naughtyattributes/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dbrizov/NaughtyAttributes/blob/master/LICENSE)
+[![Unity 2022.3+](https://img.shields.io/badge/unity-2022.3%2B-blue.svg)](https://unity3d.com/get-unity/download)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/cuebitt/NaughtyAttributes/blob/master/LICENSE)
 
-NaughtyAttributes is an extension for the Unity Inspector.
+`cuebitt/NaughtyAttributes` is an Unity editor extension that allows you to create complex and visually-appealing custom inspectors via class field attributes.
 
-It expands the range of attributes that Unity provides so that you can create powerful inspectors without the need of custom editors or property drawers. It also provides attributes that can be applied to non-serialized fields or functions.
+This repository is a fork of [dbrizov/NaughtyAttributes](https://github.com/dbrizov/NaughtyAttributes), packaged and modified for use in VRChat worlds.
 
-Most of the attributes are implemented using Unity's `CustomPropertyDrawer`, so they will work in your custom editors.
-The attributes that won't work in your custom editors are the meta attributes and some drawer attributes such as
-`ReorderableList`, `Button`, `ShowNonSerializedField` and `ShowNativeProperty`.    
-If you want all of the attributes to work in your custom editors, however, you must inherit from `NaughtyInspector` and use the `NaughtyEditorGUI.PropertyField_Layout` function instead of `EditorGUILayout.PropertyField`.
+The following changes have been made:
 
-## System Requirements
-Unity **2019.4** or later versions. Don't forget to include the NaughtyAttributes namespace.
+- [x] Added VPM listing
+- [ ] Removed unusable attributes
+- [ ] Added `NAUdonSharpBehaviour` class
+- [ ] Modified inspector to draw default UdonSharp header
 
-## Installation
-1. The package is available on the [openupm registry](https://openupm.com). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli).
+## Usage
+
+To use this package in a VRChat project, first [this project's VPM repository](https://cuebitt.github.io/NaughtyAttributes/) to VCC/ALCOM. Then import "NaughtyAttributes" into your Unity project.
+
+Most of the attributes are implemented using Unity's `CustomPropertyDrawer`, so they will work without configuration in your `UdonSharpBehaviour` class. However, some attributes (such as `Button`) will not work with the default inspector and require you to specify a custom inspector:
+
+Set your `UdonSharpBehaviour`'s base class to `NAUdonSharpBehaviour`:
+
+```cs
+public class MyBehaviour : NAUdonSharpBehaviour // <--- here!
+{
+    // ...
+}
 ```
-openupm add com.dbrizov.naughtyattributes
-```
-2. You can also install via git url by adding this entry in your **manifest.json**
-```
-"com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm"
-```
-3. You can also download it from the [Asset Store](https://assetstore.unity.com/packages/tools/utilities/naughtyattributes-129996)
 
-## Documentation
-- [Documentation](https://dbrizov.github.io/na-docs/)
-- [Documentation Repo](https://github.com/dbrizov/na-docs)
+..or create a custom inspector yourself:
 
-## Support
-NaughtyAttributes is an open-source project that I am developing in my free time. If you like it you can support me by donating.
+```cs
+#if UNITY_EDITOR && !COMPILER_UDONSHARP
+using UdonSharpEditor;
+using UnityEditor;
+using NaughtyAttributes.Editor;
+#endif
 
-- [PayPal](https://paypal.me/dbrizov)
-- [Buy Me A Coffee](https://www.buymeacoffee.com/dbrizov)
+public class MyBehaviour : UdonSharpBehaviour // <-- Don't change this
+{
+	// ...
+}
+
+#if UNITY_EDITOR && !COMPILER_UDONSHARP
+
+[CustomEditor(typeof(MyBehaviour))]
+public class MyBehaviourEditor : NaughtyInspector
+{
+    public override void OnInspectorGUI()
+    {
+        if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
+        base.OnInspectorGUI();
+    }
+}
+
+#endif
+```
+
+Note that `NaughtyEditorGUI.PropertyField_Layout` should be used instead of `EditorGUILayout.PropertyField` when using NaughtyAttributes' inspector class.
 
 # Overview
 
@@ -640,3 +663,7 @@ public class _NaughtyComponent : MonoBehaviour
 ```
 
 ![inspector](https://github.com/dbrizov/NaughtyAttributes/blob/master/Assets/NaughtyAttributes/Documentation~/ValidateInput_Inspector.png)
+
+## Attribution
+
+cuebitt/NaughtyAttributes is a fork of [dbrizov/NaughtyAttributes](https://github.com/dbrizov/NaughtyAttributes).
