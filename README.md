@@ -15,7 +15,7 @@ The following changes have been made:
 
 ## Usage
 
-To use this package in a VRChat project, first [this project's VPM repository](https://cuebitt.github.io/NaughtyAttributes/) to VCC/ALCOM. Then import "NaughtyAttributes" into your Unity project.
+To use this package in a VRChat project, first add [my VPM repository](https://cuebitt.github.io/vpm/) to VCC/ALCOM. Then import "NaughtyAttributes" into your Unity project.
 
 Most of the attributes are implemented using Unity's `CustomPropertyDrawer`, so they will work without configuration in your `UdonSharpBehaviour` class. However, some attributes (such as `Button`) will not work with the default inspector and require you to specify a custom inspector:
 
