@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.cuebitt.naughtyattributes": {
-      "version": "file:com.cuebitt.naughtyattributes",
+    "rip.cuebitt.naughtyattributes": {
+      "version": "file:rip.cuebitt.naughtyattributes",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
