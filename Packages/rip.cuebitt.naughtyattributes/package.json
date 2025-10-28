@@ -1,0 +1,14 @@
+{
+  "name": "rip.cuebitt.vrcnaughtyattributes",
+  "displayName": "VRCNaughtyAttributes",
+  "version": "0.0.2",
+  "unity": "2022.3",
+  "description": "VRCNaughtyAttributes is a port of NaughtyAttributes for VRChat.",
+  "author": {
+    "name": "Cuebitt",
+    "url": "https://github.com/cuebitt",
+    "email": "contact@cuebitt.rip"
+  },
+  "license": "MIT",
+  "vpmDependencies": {}
+}
